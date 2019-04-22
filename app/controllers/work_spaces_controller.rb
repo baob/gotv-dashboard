@@ -7,19 +7,33 @@ Council = Struct.new(:id, :name, :email)
 AvailablePollingStation = Struct.new(:station_id, :address)
 
 class WorkSpacesController < ApplicationController
+  def choose_council
+    @councils = councils
+  end
+
   def show
     @work_space = WorkSpace.find(params[:id])
   end
 
   def new
-    @work_space = WorkSpace.new
-    @councils = councils
+    council_id = params[:council_id]
+    @council = councils.find { |c| c.id == council_id }
+    if @council.blank?
+      # XXX Actually show an error and handle this better.
+      redirect_to root_path
+      return
+    end
+
+    default_name = "#{@council.name} - GOTV #{Time.now.year}"
+    @work_space = WorkSpace.new(name: default_name)
+
+    @polling_stations = council_ids_with_polling_stations[@council.id]
   end
 
   def create
     @work_space = WorkSpace.create!(work_space_params)
 
-    council_polling_stations = council_ids_with_polling_stations[params[:council]]
+    council_polling_stations = council_ids_with_polling_stations[params[:council_id]]
     council_polling_stations.each do |ps|
       PollingStation.create!(
         work_space: @work_space,

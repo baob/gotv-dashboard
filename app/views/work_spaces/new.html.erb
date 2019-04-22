@@ -5,12 +5,7 @@
     <%= f.text_field :name %>
   </div>
 
-  <div>
-    <%= label_tag :council, 'Choose your council:' %>
-    <%= select_tag :council,
-      options_for_select(@councils.map {|c| [c.name, c.id]})
-    %>
-  </div>
+  # XXX Show all the polling stations - prevent workspace creation if none?
 
   <%= f.submit 'Create workspace' %>
 <% end %>

@@ -1,0 +1,15 @@
+
+<h2>Welcome to the GOTV Dashboard <%= Time.now.year %></h2>
+
+<%= form_tag(new_work_space_path, method: 'get') do %>
+  <div>
+    <%= label_tag :council_id, 'Select your council to start creating your work space:' %>
+    <%= select_tag :council_id,
+      options_for_select(@councils.map {|c| [c.name, c.id]})
+    %>
+  </div>
+
+  <div>
+    <%= submit_tag 'Select council' %>
+  </div>
+<% end %>
