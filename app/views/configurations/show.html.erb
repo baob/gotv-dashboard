@@ -1,0 +1,68 @@
+
+<% content_for :subtitle do %>
+  Input figures for your workspace for election day
+<% end %>
+
+<% content_for :content do %>
+  <%# XXX Some similarities between this and
+    `app/views/work_spaces/show.html.erb` - de-dupe/share more? %>
+
+  <table class="table is-striped is-narrow is-fullwidth">
+    <thead>
+      <tr>
+        <th>Committee Room</th>
+        <th>Polling Station</th>
+        <th>Labour promises</th>
+        <th>Registered voters</th>
+      </tr>
+    </thead>
+
+    <tbody class="is-size-7">
+      <% @work_space.latest_observations_by_committee_room.each do |committee_room, observations|
+        first_observation = observations.first %>
+
+        <%= form_with do |f| %>
+
+          <% observations.each do |o|
+             first_for_committee_room = o == first_observation
+             polling_station = o.polling_station
+          %>
+
+            <tr>
+              <% if first_for_committee_room %>
+                <%= render 'shared/committee_room_info',
+                  committee_room: committee_room,
+                  rowspan: observations.length,
+                  render_controls: false
+                %>
+              <% end %>
+
+              <td>
+                <%= render 'shared/polling_station_name', polling_station: polling_station %>
+              </td>
+
+              <td class="control">
+                <%= f.number_field(
+                  :labour_promises,
+                  min: 0,
+                  required: true,
+                  class: "input"
+                ) %>
+              </td>
+
+              <td>
+                <%= f.number_field(
+                  :labour_promises,
+                  minimum: 0,
+                  required: true,
+                  class: "input"
+                ) %>
+              </td>
+
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
