@@ -7,8 +7,8 @@ class WorkSpace < ApplicationRecord
   has_many :canvassers_observations, through: :committee_rooms
   has_many :cars_observations, through: :committee_rooms
   has_many :polling_stations, through: :work_space_polling_stations
-  has_many :wards, -> { distinct.order(:name) }, through: :polling_stations
-  has_many :polling_districts, -> { distinct.order(:reference) }, through: :polling_stations
+  has_many :wards
+  has_many :polling_districts, through: :wards
 
   accepts_nested_attributes_for :work_space_polling_stations
 
