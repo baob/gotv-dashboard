@@ -5,6 +5,7 @@ class WarpCountObservation < ApplicationRecord
   belongs_to :work_space_polling_station
   def self.observed_for ; :work_space_polling_station ; end
   belongs_to :user
+  has_one :work_space, through: :work_space_polling_station
 
   # Note: Unlike other observations, WARP counts are additive rather than a
   # snapshot of the latest state for some statistic in some area. This makes
@@ -13,4 +14,8 @@ class WarpCountObservation < ApplicationRecord
   # canvassing, and then the total count will be the sum of all the (valid)
   # such counts throughout the day.
   validates_presence_of :count
+
+  def past_counts
+    []
+  end
 end

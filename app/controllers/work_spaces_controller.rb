@@ -21,7 +21,11 @@ class WorkSpacesController < ApplicationController
 
   def observations
     @work_space = WorkSpace.find_by_identifier!(params[:id])
-    @observations = @work_space.turnout_observations.order(created_at: :desc)
+
+    @turnout_observations = @work_space.turnout_observations.order(created_at: :desc)
+    @warp_counts = @work_space.warp_count_observations.order(created_at: :desc)
+    @observations = @turnout_observations + @warp_counts
+
     render layout: 'organiser_dashboard'
   end
 

@@ -26,6 +26,17 @@ RSpec.feature 'raw data page', type: :feature, js: true do
         )
       )
     )
+    create(
+      :warp_count_observation,
+      count: 53,
+      work_space: work_space,
+      work_space_polling_station: create(
+        :work_space_polling_station,
+        polling_station: create(
+          :polling_station, name: 'Third Polling Station'
+        )
+      )
+    )
 
     visit observations_work_space_path(work_space)
 
@@ -34,5 +45,7 @@ RSpec.feature 'raw data page', type: :feature, js: true do
     expect(page).to have_text('Some Campaigner')
     expect(page).to have_text('Second Polling Station')
     expect(page).to have_text('66')
+    expect(page).to have_text('Third Polling Station')
+    expect(page).to have_text('53')
   end
 end
