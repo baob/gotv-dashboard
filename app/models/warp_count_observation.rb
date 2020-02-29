@@ -1,9 +1,8 @@
 class WarpCountObservation < ApplicationRecord
-  # XXX Same relationships etc. here as for RemainingLiftsObservation - DRY up
-
   # XXX But really a WorkSpacePollingDistrict
-  belongs_to :work_space_polling_station
-  def self.observed_for ; :work_space_polling_station ; end
+
+  include WorkSpacePollingStationObservation
+
   belongs_to :user
   has_one :work_space, through: :work_space_polling_station
 
@@ -13,9 +12,5 @@ class WarpCountObservation < ApplicationRecord
   # from WARP of all the new confirmed votes in an area, from the latest
   # canvassing, and then the total count will be the sum of all the (valid)
   # such counts throughout the day.
-  validates_presence_of :count
-
-  def past_counts
-    []
-  end
+  # validates_presence_of :count
 end
