@@ -19,6 +19,12 @@ class WorkSpacesController < ApplicationController
     redirect_to work_space_path(work_space)
   end
 
+  def observations
+    @work_space = WorkSpace.find_by_identifier!(params[:id])
+    @observations = @work_space.turnout_observations.order(created_at: :desc)
+    render layout: 'organiser_dashboard'
+  end
+
   def update
     work_space = WorkSpace.find_by_identifier!(params[:id])
     work_space.update!(update_work_space_params)
