@@ -32,3 +32,4 @@
 
 # Ignore SimpleCov code coverage results.
 coverage/
+.rspec-local
