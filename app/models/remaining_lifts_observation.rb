@@ -5,4 +5,8 @@ class RemainingLiftsObservation < ApplicationRecord
   belongs_to :user
 
   validates_presence_of :count
+
+  def past_counts
+    []
+  end
 end

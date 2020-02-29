@@ -9,4 +9,8 @@ module CommitteeRoomObservation
 
     validates_presence_of :count
   end
+
+  def past_counts
+    []
+  end
 end
