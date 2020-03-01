@@ -24,7 +24,8 @@ class WorkSpacesController < ApplicationController
 
     @turnout_observations = @work_space.turnout_observations.order(created_at: :desc)
     @warp_counts = @work_space.warp_count_observations.order(created_at: :desc)
-    @observations = @turnout_observations + @warp_counts
+    # XXX could do with a test for the sorting
+    @observations = (@turnout_observations + @warp_counts).sort{ |a,b| a.created_at <=> b.created_at}
 
     render layout: 'organiser_dashboard'
   end
